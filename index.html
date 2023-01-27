@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+                <style >a,a:visited{text-decoration : none ;color : #ffffff; font-weight: 700;}body{padding : 0; margin: 0; display: flex; justify-content: center; align-items: center; text-align: center; vertical-align: middle; min-height: 100vh; font-family: Arial, Helvetica, sans-serif; text-transform: uppercase; background-color: #161616;}.fullScreen{position:relative; border: solid #000000; border-radius: 5px} .fullScreen a, a:visited{display: block; font-size: 4em; padding: 25px; text-align: center; text-shadow: 0px 0px 1px #000000, 0px 0px 1px #000000, 0px 0px 1px #000000,0px 0px 1px #000000, 0px 0px 1px #000000, 0px 0px 1px #000000, 0px 0px 1px #000000,0px 0px 1px #000000; z-index: 1;} .fullScreen a p{margin: 0; font-size: 0.5em;}#colorElement{position:absolute; top:0; height: 100%;width: 100%; z-index: -1;} </style>
+        </head>
+        <body>
+                <div class="fullScreen"><a href="#" onClick="requestFullScreen();"> click<p>to be appart of the show</p></a><div id="colorElement"></div></div>
+
+        <script>
+
+        const el = document.getElementById('colorElement');
+        
+        
+        function changeColor()  {
+            let color = "#0000ff";
+            
+            const colorSource = new EventSource("http://localhost/color");
+            colorSource.onmessage = function (event){
+                                    color = "blue"
+                                    el.style.backgroundColor = color;};
+        }
+
+        
+        function requestFullScreen() {
+            changeColor();
+            // Supports most browsers and their versions.
+            var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen 
+            || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+            
+            if (requestMethod) {
+        
+            // Native full screen.
+            requestMethod.call(el);
+        
+            } else if (typeof window.ActiveXObject !== "undefined") {
+        
+            // Older IE.
+            var wscript = new ActiveXObject("WScript.Shell");
+        
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+            }
+        }
+
+        </script>
+
+  
+  
+        </body>
+    </html>
